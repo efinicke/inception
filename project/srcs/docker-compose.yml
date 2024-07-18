@@ -1,0 +1,83 @@
+version: '3'
+
+
+services:
+
+  nginx:
+    container_name: nginx
+    depends_on:
+      - wordpress
+    build:
+      context : ./requirements/nginx/.
+      dockerfile : Dockerfile
+    image: nginx:incptn
+    volumes:
+      - ./requirements/nginx/tools:/etc/nginx/ssl/
+      - wp-volume:/var/www/html/
+    ports:
+      - "443:443"
+    networks:
+      - inception
+    restart: always
+
+  wordpress:
+    container_name: wordpress
+    depends_on:
+      mariadb :
+        condition: service_healthy
+    build:
+      context : ./requirements/wordpress/.
+      dockerfile : Dockerfile
+    image: wordpress:incptn
+    environment:
+      - DB_NAME=${DB_NAME}
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - ADMIN_USER=${ADMIN_USER}
+      - ADMIN_PASS=${ADMIN_PASS}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+    volumes:
+      - wp-volume:/var/www/html
+    networks:
+      - inception
+    restart: always
+
+  mariadb:
+    container_name: mariadb
+    build :
+      context : ./requirements/mariadb/.
+      dockerfile : Dockerfile
+    image : mariadb:incptn
+    environment:
+      - DB_NAME=${DB_NAME}
+      - DB_HOST=${DB_HOST}
+      - DB_ROOT=${DB_ROOT}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+    volumes:
+      - db-volume:/var/lib/mysql/
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "--silent"]
+    networks:
+      - inception
+    restart : always
+
+networks:
+  inception:
+    driver: bridge
+
+volumes:
+  db-volume:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/efinicke/data/db_data
+      o: bind
+
+  wp-volume:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/efinicke/data/wp_data
+      o: bind
