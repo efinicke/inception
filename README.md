@@ -36,6 +36,8 @@ L'utilisation de Docker Compose permet de créer un environnement reproductible,
 ## Content 
 
 L'arborescence choisie a été rganisée pour structurer efficacement les composants du projet Docker, facilitant ainsi la gestion, le déploiement et la maintenance des services Nginx, WordPress et MariaDB. Chaque dossier de service contient un Dockerfile pour définir l'image Docker, un dossier conf pour les fichiers de configuration spécifiques, et un dossier tools pour les scripts utilitaires nécessaires à l'initialisation et à la gestion du service.
+
+```
 .
 ├── Makefile
 └── srcs
@@ -63,6 +65,7 @@ L'arborescence choisie a été rganisée pour structurer efficacement les compos
             └── tools
                 └── wp-config-install.sh
 
+```
 
 - **Nginx** : Nginx est utilisé comme serveur web et proxy pour servir le contenu de WordPress et gérer les demandes HTTP/HTTPS. Pour info, environ 33% à 35% des sites webs dans le monde l'utilisent, notamment des entreprises majeures comme Netflix et GitHub. La raison est que Nginx utilise un modèle d'événement asynchrone et non-bloquant, ce qui lui permet de gérer des milliers de connexions simultanées avec une faible consommation de ressources, ce qui est idéale pour les plateformes à fort trafic.
 - **WordPress** : WordPress est un système de gestion de contenu (CMS) open source populaire, utilisé pour créer des sites web, des blogs et des applications en ligne grâce à une interface utilisateur intuitive conviviale pour la création de contenus. Je l'ai déployé comme conteneur pour fournir une plateforme de gestion de contenu dynamique.
