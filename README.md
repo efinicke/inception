@@ -121,7 +121,7 @@ https://docs.docker.com/engine/install/linux-postinstall/
        ```bash
        sudo vim /etc/hosts
        ```
-   - Ajoutez la ligne suivante :
+   - Ajoutez la ligne suivante pour mettre un nom de domaine en local à notre site wordpress:
        ```
        127.0.0.1 www.efinicke.42.fr
        ```
