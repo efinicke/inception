@@ -102,21 +102,31 @@ L'arborescence choisie a été rganisée pour structurer efficacement les compos
 - **mkcert** : c'est cet outil qui m'a permis de créer des certificats SSL/TLS auto-signés locaux qui sont reconnus comme valides par le navigateur. Il simplifie la génération de certificats pour le développement local en évitant les avertissements de sécurité des navigateurs. 
 
 
-## Etapes pour déployer notre projet :
+## Usage
 
 1. Mettre à jour les référentiels : 
 ```bash
 $ sudo apt update
 $ sudo apt upgrade -y
 ```
-
-2. Installer Docker-Compose  :
+2. Installer Docker et Docker-Compose  :
 https://docs.docker.com/engine/install/ubuntu/
 
 3. Permettre à notre $USER d'utiliser docker-compose sans sudo :
 https://docs.docker.com/engine/install/linux-postinstall/
 
-4. Lancer notre docker-compose : 
+4. Mettre le .env dans le dossier du fichier "docker-compose.yml" pour transmettre les variables d'environnements à la BDD et wordpress, et pour le certificat.
+
+5. - Éditer le fichier `/etc/hosts` :
+       ```bash
+       sudo vim /etc/hosts
+       ```
+   - Ajoutez la ligne suivante :
+       ```
+       127.0.0.1 www.efinicke.42.fr
+       ```
+
+6. Lancer les services : 
 ```bash
 make
 ```
